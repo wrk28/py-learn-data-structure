@@ -45,10 +45,20 @@ def check_balanced_brackets(brackets: str) -> str:
         
 
 if __name__ == "__main__":
+    
+    expression_1 = r'(((([{}]))))'
+    expression_2 = r'[([])((([[[]]])))]{()}'
+    expression_3 = r'{{[()]}}'
+    expression_4 = r'}{}'
+    expression_5 = r'{{[(])]}}'
+    expression_6 = r'[[{())}]'
 
-    expression = '((((([[[[[]]]]])))))'
     try:
-        print(check_balanced_brackets(expression))
-        print(check_balanced_brackets('-(([[{{}}]]))'))
+        print(check_balanced_brackets(expression_1))
+        print(check_balanced_brackets(expression_2))
+        print(check_balanced_brackets(expression_3))
+        print(check_balanced_brackets(expression_4))
+        print(check_balanced_brackets(expression_5))
+        print(check_balanced_brackets(expression_6))
     except Exception as e:
         print('Error:', e)
