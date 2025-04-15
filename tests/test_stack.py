@@ -20,6 +20,8 @@ class TestStack:
 
     def test_exception(self):
         try:
-            check_balanced_brackets('(([[]))1')
+            result = check_balanced_brackets('(([[]))1')
         except Exception as e:
             assert str(e) == 'The sequence has unexpected elements'
+            return
+        assert result not in (True, False)
