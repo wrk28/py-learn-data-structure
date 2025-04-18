@@ -1,13 +1,10 @@
 class Stack:
 
-    def __init__(self, list_: list = []):
-        self.stack = list_
+    def __init__(self, list_: list = None):
+        self.stack = list_ if list_ else []
 
     def is_empty(self):
-        if len(self.stack) == 0:
-            return True
-        else:
-            return False
+        return not self.stack
 
     def push(self, item):
         self.stack.append(item)
@@ -22,11 +19,11 @@ class Stack:
         return len(self.stack)
     
 
-def check_balanced_brackets(brackets: str) -> str:
+def check_balanced_brackets(brackets: str) -> bool:
 
     brackets_map = {')': '(', '}': '{', ']': '['}
     for item in brackets:
-        if item not in [item for pair in brackets_map.items() for item in pair]:
+        if item not in set(brackets_map.keys() | brackets_map.values()):
             raise ValueError('The sequence has unexpected elements')
         
     stack = Stack()
@@ -35,30 +32,31 @@ def check_balanced_brackets(brackets: str) -> str:
             stack.push(item)
         elif item in brackets_map.keys():
             if stack.is_empty() or stack.peek() != brackets_map[item]:
-                return 'Несбалансированно'
+                return False
             else:
                 stack.pop()
     if stack.is_empty():
-        return 'Сбалансированно'
+        return True
     else:
-        return 'Несбалансированно'
-        
+        return False
+
 
 if __name__ == "__main__":
     
-    expression_1 = r'(((([{}]))))'
-    expression_2 = r'[([])((([[[]]])))]{()}'
-    expression_3 = r'{{[()]}}'
-    expression_4 = r'}{}'
-    expression_5 = r'{{[(])]}}'
-    expression_6 = r'[[{())}]'
+    expressions = [
+        r'(((([{}]))))',
+        r'[([])((([[[]]])))]{()}',
+        r'{{[()]}}',
+        r'}{}',
+        r'{{[(])]}}',
+        r'[[{())}]'
+    ]
 
     try:
-        print(check_balanced_brackets(expression_1))
-        print(check_balanced_brackets(expression_2))
-        print(check_balanced_brackets(expression_3))
-        print(check_balanced_brackets(expression_4))
-        print(check_balanced_brackets(expression_5))
-        print(check_balanced_brackets(expression_6))
+        for item in expressions:
+            if check_balanced_brackets(item):
+                print('Сбалансированно')
+            else:
+                print('Несбалансированно')
     except Exception as e:
         print('Error:', e)
